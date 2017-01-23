@@ -35,7 +35,8 @@ For older versions, check the available [releases](../../releases).
 
 * Pick a `.conkyrc` file from the `.jelly-conky-themes` folder and copy it into your `~` dir.
 
-**NOTE** some files/folders are hidden; unhide them. :smile:
+> **NOTE**  
+> Some files/folders are hidden; unhide them. :smile:
 
 ---
 
@@ -72,10 +73,9 @@ Edit the `template8` variable inside the `.conkyrc` file to change the units.
 * Edit the `color` variables inside the `.conkyrc` file to change **text** color.
 
 * To change the **icon** colors, first use the `render-pngs` script to render a folder of icons with the desired color, then change the icon sources in the `.conkyrc` file under the `Icon Sources` section.
-    * The script uses the `SVG` folder to render png's.
-
-    * You should keep the size at **32(px)** for this conky.
-
+    > * The script requires **inkscape**.
+    > * The script uses the `SVG` folder to render png's.
+    > * You should keep the size at **32(px)** for this conky.
 
 ---
 
