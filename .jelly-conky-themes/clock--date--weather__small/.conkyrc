@@ -7,7 +7,6 @@ background=true,
 update_interval=1,
 double_buffer=true,
 no_buffers=true,
-imlib_cache_size=10,
 
 draw_shades=false,
 draw_outline=false,
@@ -62,7 +61,7 @@ color9="FFFFFF",  --  current conditions
 -------------------------------------
 --  Icon Sources
 -------------------------------------
-template0="~/.jelly-conky-icons/#fff__32",
+template0="~/.jelly-conky/#fff__32",
 
 
 -------------------------------------
@@ -99,8 +98,7 @@ template9=""
 conky.text = [[
 \
 \
-${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/forecast/daily?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/forecast.json}\
-${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/weather?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/weather.json}\
+${execi 300 ~/.jelly-conky/get_weather ${template6} ${template7} ${template8} ${template9}}\
 \
 \
 \
@@ -143,25 +141,25 @@ ${alignc}${execi 300 LANG=${template9} LC_TIME=${template9} date +"%B"}${font}${
 \
 ${font Roboto Light :size=22}${color6}\
 ${goto 40}${voffset 18}\
-${execi 300 jq ".main.temp" ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}°${font}${color}
+${execi 300 jq ".main.temp" ~/.cache/jelly-conky/weather.json | awk '{print int($1+0.5)}' # round num}°${font}${color}
 \
 \
 \
 \
 ${font Roboto Light :size=10}\
 ${goto 40}${voffset 5}\
-${color7}${execi 300 jq ".list[0].temp.min" ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}° ${color}| \
-${color8}${execi 300 jq ".list[0].temp.max" ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°${font}${color}
+${color7}${execi 300 ~/.jelly-conky/parse_weather 'avg' '.main.temp_min' '0'}° ${color}| \
+${color8}${execi 300 ~/.jelly-conky/parse_weather 'avg' '.main.temp_max' '0'}°${font}${color}
 \
 \
 \
 \
 ${font Roboto Light :size=10}${color9}\
 ${goto 40}${voffset 5}\
-${execi 300 jq -r ".weather[0].description" ~/.cache/weather.json}${font}${color}
+${execi 300 jq -r ".weather[0].description" ~/.cache/jelly-conky/weather.json}${font}${color}
 \
 \
 \
 \
-${execi 300 cp -f ${template0}/$(jq .weather[0].id ~/.cache/weather.json).png ~/.cache/current.png}${image ~/.cache/current.png -p 128,114 -s 32x32}\
+${execi 300 cp -f ${template0}/$(jq .weather[0].id ~/.cache/jelly-conky/weather.json).png ~/.cache/jelly-conky/current.png}${image ~/.cache/jelly-conky/current.png -p 128,114 -s 32x32}\
 ]]

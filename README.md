@@ -6,17 +6,6 @@ It displays the **time**, **date**, **current weather**.
 
 ---
 
-* [Compatibility](#compatibility)
-* [Installation](#installation)
-* [API-key](#api-key)
-* [City](#city)
-* [Language](#language)
-* [Units](#units)
-* [Colors](#colors)
-* [Preview](#preview)
-
----
-
 ### Compatibility:
 
 The latest version of this theme is on the master branch, and it supports conky `1.10.x`.
