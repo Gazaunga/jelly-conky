@@ -1,0 +1,50 @@
+#!/bin/bash
+
+install_google_fonts () {
+    local dir=${BASH_SOURCE%/*}
+
+    local font_dir=~/'.local/share/fonts/'
+
+    local css_url='https://fonts.googleapis.com/css'
+
+    local query_str='?family='
+
+    #  family:[weight],[style]
+    #
+    #  use '+' instead of space
+    #  use ':' to separate weight/style from family
+    #  use ',' to separate weight from style
+    #  weight comes before style
+    #  use numbers or words for weight
+    local font_list=(
+        'Roboto'
+        'Roboto:bold'
+        'Roboto:italic'
+        'Roboto:bold,italic'
+    )
+
+    mkdir -p "$font_dir"
+
+
+    #  download the css file first,
+    #  then extract the download link
+    local font
+    for font in "${font_list[@]}"; do
+        local font_url=$(
+            curl -sf "$css_url$query_str${font//,}" |
+            grep -oE "https://.*.ttf"
+        )
+
+        font=${font//[^[:alnum:]]/_}.ttf
+
+        curl -sf "$font_url" -o "$font_dir/$font"
+
+        if [[ $? != 0 ]]; then
+            show_error "Couldn't download font $font"
+        else
+            show_success "Installed: $font"
+        fi
+    done
+}
+
+install_google_fonts
